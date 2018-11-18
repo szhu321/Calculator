@@ -1,5 +1,7 @@
+package main;
 import java.util.Arrays;
 
+import datatypes.Matrix;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -77,15 +79,15 @@ public class Main extends Application
 	public void start(Stage arg0) throws Exception
 	{
 		window = arg0;
-		root = new Group();
-		scene = new Scene(root, 1000, 500);
-		
-		Button btn1 = new Button("Hello Boys");
-		root.getChildren().add(btn1);
-		BorderPane fxmlBP = FXMLLoader.load(getClass().getResource("/CalcDisplay.fxml"));
-		scene.setRoot(fxmlBP);
-		
-		window.setScene(scene);
+//		root = new Group();
+//		scene = new Scene(root, 1000, 500);
+//		
+//		Button btn1 = new Button("Hello Boys");
+//		root.getChildren().add(btn1);
+//		BorderPane fxmlBP = FXMLLoader.load(getClass().getResource("/CalcDisplay.fxml"));
+//		scene.setRoot(fxmlBP);
+//		
+//		window.setScene(scene);
 		window.show();
 		window.close();
 	}

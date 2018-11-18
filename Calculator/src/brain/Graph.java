@@ -1,5 +1,8 @@
+package brain;
 import java.util.ArrayList;
 import java.util.List;
+
+import datatypes.Vector2;
 
 public class Graph
 {
