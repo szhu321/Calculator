@@ -17,6 +17,7 @@ public class Main extends Application
 	private Group root;
 	private GridPane gridPane;
 	private TextField textField;
+	private TextArea textArea;
 	
 	public static void main(String[] args)
 	{
@@ -27,17 +28,31 @@ public class Main extends Application
 	{
 		window = arg0;
 		window.setTitle("Calculator");
+		window.setResizable(false);
 		
 		VBox vbox = new VBox();
+		vbox.getStyleClass().add("container");
 		
 		gridPane = new GridPane();
 		root = new Group();
 		root.getChildren().add(vbox);
 		
-		scene = new Scene(root, 640, 480);
+		scene = new Scene(root, 410, 640);
+		
+		//adding CSS
+		scene.getStylesheets().add("file:stylesheets/calculator.css");
 		
 		textField = new TextField();
+		//adding a styleClass to the textField.
+		textField.getStyleClass().add("inputBox");
+		
 		textField.setEditable(false);
+		
+		textArea = new TextArea();
+		textArea.getStyleClass().add("displayBox");
+		textArea.setEditable(false);
+		
+		vbox.getChildren().add(textArea);
 		vbox.getChildren().add(textField);
 		vbox.getChildren().add(gridPane);
 		
@@ -75,7 +90,12 @@ public class Main extends Application
 			String ch = textField.getText().substring(textField.getText().length() - 1);
 			try 
 			{
-				if(ch.equals(".")) textField.setText(textField.getText() + s);
+				if(ch.equals("."))
+				{
+					//prevents multiple dots.
+					if(!s.equals("."))
+						textField.setText(textField.getText() + s);
+				}
 				else
 				{
 					Integer.parseInt(ch);

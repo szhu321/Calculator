@@ -1,0 +1,27 @@
+*
+{
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+
+.button
+{
+	-fx-font-size: 20pt;
+	-fx-pref-width: 100px;
+	-fx-pref-height: 100px;
+}
+
+.inputBox
+{
+	-fx-font-size: 18pt;
+}
+
+.displayBox
+{
+	-fx-pref-width: 300px;
+}
+
+.container
+{
+	-fx-padding: 10px;
+}
