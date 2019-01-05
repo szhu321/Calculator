@@ -16,7 +16,6 @@ public class Main extends Application
 	private Scene scene;
 	private Group root;
 	private GridPane gridPane;
-	private TextField textField;
 	
 	public static void main(String[] args)
 	{
@@ -36,54 +35,39 @@ public class Main extends Application
 		
 		scene = new Scene(root, 640, 480);
 		
-		textField = new TextField();
-		textField.setEditable(false);
-		vbox.getChildren().add(textField);
+		TextArea textArea = new TextArea();
+		vbox.getChildren().add(textArea);
 		vbox.getChildren().add(gridPane);
 		
-		calcButtons();
+		createButtons();
 		
 		window.setScene(scene);
 		window.show();
 	}
 	
-	public void calcButtons()
+	public void createButtons()
 	{
-		numBtn("7", 0, 0); numBtn("8", 1, 0); numBtn("9", 2, 0);		// row1
-		numBtn("4", 0, 1); numBtn("5", 1, 1); numBtn("6", 2, 1);		// row2
-		numBtn("1", 0, 2); numBtn("2", 1, 2); numBtn("3", 2, 2);		// row3
-		numBtn("0", 0, 3); 												// row4
-		
-		opBtn(".", 1, 3);
+		// numbers, row0
+		Button sev = new Button("7"); gridPane.add(sev, 0, 0);
+		Button eig = new Button("8"); gridPane.add(eig, 1, 0);
+		Button nin = new Button("9"); gridPane.add(nin, 2, 0);
+		// numbers, row1
+		Button fou = new Button("4"); gridPane.add(fou, 0, 1);
+		Button fiv = new Button("5"); gridPane.add(fiv, 1, 1);
+		Button six = new Button("6"); gridPane.add(six, 2, 1);
+		// numbers, row2
+		Button one = new Button("1"); gridPane.add(one, 0, 2);
+		Button two = new Button("2"); gridPane.add(two, 1, 2); 
+		Button thr = new Button("3"); gridPane.add(thr, 2, 2);
+		// row3
+		Button zer = new Button("0"); gridPane.add(zer, 0, 3);
+		Button dot = new Button("."); gridPane.add(dot, 1, 3);
 		Button equ = new Button("="); gridPane.add(equ, 2, 3);
 		
-		opBtn("÷", 3, 0); opBtn("×", 3, 1); opBtn("-", 3, 2); opBtn("+", 3, 3); // operators
-	}
-	
-	public void numBtn(String s, int xpos, int ypos)
-	{
-		Button btn = new Button(s);
-		gridPane.add(btn, xpos, ypos);
-		btn.setOnAction(event -> textField.setText(textField.getText() + s));
-	}
-	
-	public void opBtn(String s, int xpos, int ypos)
-	{
-		Button btn = new Button(s);
-		gridPane.add(btn, xpos, ypos);
-		btn.setOnAction(event -> {
-			String ch = textField.getText().substring(textField.getText().length() - 1);
-			try 
-			{
-				if(ch.equals(".")) textField.setText(textField.getText() + s);
-				else
-				{
-					Integer.parseInt(ch);
-					textField.setText(textField.getText() + s);
-				}
-			} catch(NumberFormatException e) {
-				textField.setText(textField.getText().substring(0, textField.getText().length() - 1) + s);
-			}
-		});
+		// operators
+		Button div = new Button("÷"); gridPane.add(div, 3, 0);
+		Button mul = new Button("x"); gridPane.add(mul, 3, 1);
+		Button sub = new Button("-"); gridPane.add(sub, 3, 2);
+		Button add = new Button("+"); gridPane.add(add, 3, 3);
 	}
 }
