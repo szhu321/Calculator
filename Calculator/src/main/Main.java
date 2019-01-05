@@ -1,94 +1,89 @@
 package main;
-import java.util.Arrays;
 
-import datatypes.Matrix;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application
 {
-	public Stage window;
-	public Scene scene;
-	public Group root;
+	private Stage window;
+	private Scene scene;
+	private Group root;
+	private GridPane gridPane;
+	private TextField textField;
 	
 	public static void main(String[] args)
 	{
-		int[][] array =
-		{ 
-			{1, 2, 4},
-			{-3, 0, 3},
-			{-4, -2, -1},
-		};
-		
-//		System.out.println(Determinants.calculateDeterminant(array));
-//		int[][] array2 = Determinants.getArrayAfterDelete(array, 0, 2);
-		
-		
-		int[][] a1 = 
-		{
-			{0, 1, 3},
-			{1, 1, 4},
-			{2, 2, 2}
-		};
-		int[][] a2 = 
-		{
-			{1, 1, 3},
-			{1, 2, 4},
-			{4, 8, 1}
-		};
-		
-		int[][] a3 =
-		{
-			{-2, -4, 9},
-			{-4, -8, 17},
-			{1, 2, -4}
-		};
-		
-		int x = 14 * 3;
-		System.out.println(x);
-		Matrix m3 = new Matrix(a3);
-		System.out.println(m3.getRREF());
-		//m3.reducedRowEchelonForm();
-		//System.out.println(m3.getInverseMatrix().getInverseMatrix());
-		//System.out.println(Matrix.combineMatrix(new Matrix(a1), new Matrix(a2)));
-		//System.out.println(Matrix.getIdentityMatrix(100));
-		
-		
-//		for(double[] row: a3)
-//		{
-//			for(double col: row)
-//			{
-//				System.out.print(col + " ");
-//			}
-//			System.out.println();
-//		}
-		
-//		double[][] d = new double[3][3];
-//		Arrays.fill();
-//		System.out.println("What is the default" + d[0][0]);
-		
 		launch(args);
 	}
-
-	@Override
-	public void start(Stage arg0) throws Exception
+	
+	public void start(Stage arg0) throws Exception 
 	{
 		window = arg0;
-//		root = new Group();
-//		scene = new Scene(root, 1000, 500);
-//		
-//		Button btn1 = new Button("Hello Boys");
-//		root.getChildren().add(btn1);
-//		BorderPane fxmlBP = FXMLLoader.load(getClass().getResource("/CalcDisplay.fxml"));
-//		scene.setRoot(fxmlBP);
-//		
-//		window.setScene(scene);
+		window.setTitle("Calculator");
+		
+		VBox vbox = new VBox();
+		
+		gridPane = new GridPane();
+		root = new Group();
+		root.getChildren().add(vbox);
+		
+		scene = new Scene(root, 640, 480);
+		
+		textField = new TextField();
+		textField.setEditable(false);
+		vbox.getChildren().add(textField);
+		vbox.getChildren().add(gridPane);
+		
+		calcButtons();
+		
+		window.setScene(scene);
 		window.show();
-		window.close();
+	}
+	
+	public void calcButtons()
+	{
+		numBtn("7", 0, 0); numBtn("8", 1, 0); numBtn("9", 2, 0);		// row1
+		numBtn("4", 0, 1); numBtn("5", 1, 1); numBtn("6", 2, 1);		// row2
+		numBtn("1", 0, 2); numBtn("2", 1, 2); numBtn("3", 2, 2);		// row3
+		numBtn("0", 0, 3); 												// row4
+		
+		opBtn(".", 1, 3);
+		Button equ = new Button("="); gridPane.add(equ, 2, 3);
+		
+		opBtn("÷", 3, 0); opBtn("×", 3, 1); opBtn("-", 3, 2); opBtn("+", 3, 3); // operators
+	}
+	
+	public void numBtn(String s, int xpos, int ypos)
+	{
+		Button btn = new Button(s);
+		gridPane.add(btn, xpos, ypos);
+		btn.setOnAction(event -> textField.setText(textField.getText() + s));
+	}
+	
+	public void opBtn(String s, int xpos, int ypos)
+	{
+		Button btn = new Button(s);
+		gridPane.add(btn, xpos, ypos);
+		btn.setOnAction(event -> {
+			String ch = textField.getText().substring(textField.getText().length() - 1);
+			try 
+			{
+				if(ch.equals(".")) textField.setText(textField.getText() + s);
+				else
+				{
+					Integer.parseInt(ch);
+					textField.setText(textField.getText() + s);
+				}
+			} catch(NumberFormatException e) {
+				textField.setText(textField.getText().substring(0, textField.getText().length() - 1) + s);
+			}
+		});
 	}
 }
