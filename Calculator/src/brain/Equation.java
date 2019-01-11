@@ -7,6 +7,8 @@ package brain;
  */
 public class Equation
 {
+	public static final String[] evalSymbol = {"+", "-", "÷", "×"};
+	
 	private String expression;
 	
 	/**
@@ -25,8 +27,26 @@ public class Equation
 	 */
 	public boolean addCharacter(String character)
 	{
-		expression += character;
-		return false;
+		if(character.length() != 1)
+			return false;
+		if(character.equals("."))
+		{
+			if(isDotAllowed())
+			{
+				expression += character;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		//if the previous character and the current character is a evaluation symbol, change the previous symbol to the new one.
+		if(isPreEvalSymobl() && isEvalSymbol(character))
+			expression = expression.substring(0, expression.length() - 1) + character;
+		else
+			expression += character;
+		return true;
 	}
 	
 	/**
@@ -37,7 +57,17 @@ public class Equation
 	 */
 	private boolean isDotAllowed()
 	{
-		return false;
+		//if the previous character is a dot then the dot is not allowed.
+		if(isPreCharDot())
+			return false;
+		//if the previous character is a evaluation symbol then the dot is allowed.
+		if(isPreEvalSymobl())
+			return true;
+		//if the last number has a dot then another dot is not allowed.
+		String lastNum = getLastNumber(expression);
+		if(lastNum.contains("."))
+			return false;
+		return true;
 	}
 	
 	/**
@@ -48,7 +78,6 @@ public class Equation
 	 */
 	private boolean isPreEvalSymobl()
 	{
-		String[] evalSymbol = {"+", "-", "÷", "×"};
 		//if the expression is empty return false
 		if(expression.length() == 0)
 			return false;
@@ -56,6 +85,25 @@ public class Equation
 		for(String str : evalSymbol)
 			if(str.equals(lastChar))
 				return true;
+		return false;
+	}
+	
+	/**
+	 * Checks to see if the character is a evaluation symbol.
+	 * </br>
+	 * Evaluation symbols: +, -, ÷, ×
+	 * @param str
+	 * @return
+	 */
+	public static boolean isEvalSymbol(String str)
+	{
+		if(str.length() != 1)
+			return false;
+		for(String symbol : evalSymbol)
+		{
+			if(str.equals(symbol))
+				return true;
+		}
 		return false;
 	}
 	
@@ -75,39 +123,69 @@ public class Equation
 	
 	/**
 	 * Gets the last number that appeared in the expression.
-	 * @return The last real number.
+	 * @return The last number.
 	 * </br>
 	 * Ex. expression = "2 + 2.3 - 2.132" returns "2.132"
 	 * </br> 
 	 * expression = "4.4 + 2." returns "2"
 	 * </br>
-	 * expression = "2 + 3.2 -" returns "3.2"
+	 * expression = "2 + .2 -" returns ".2"
 	 */
-	public String getLastNumber()
+	public static String getLastNumber(String str)
 	{
-		if(expression.length() == 0)
+		//If there is no string there is no number.
+		if(str.length() == 0)
 			return "";
 		int beginningIdx = 0;
-		int endingIdx = 0;
-		//finds the ending idx.
-		for(int i = expression.length() - 1; i >= 0; i--)
+		int endingIdx = getIndexOfLastDigit(str);
+		//If there is no last digit there is no number.
+		if(endingIdx == -1)
+			return "";
+		for(int i = endingIdx - 1; i >= 0; i--)
 		{
-			String str = expression.substring(i, i + 1);
+			String tempStr = str.substring(i, endingIdx + 1);
 			try
 			{
-				Integer.parseInt(str);
-				endingIdx = i;
+				//System.out.println("Expi: " + tempStr);
+				Double.parseDouble(tempStr);
+			}
+			catch(NumberFormatException ex)
+			{
+				
+				beginningIdx = i + 1;
 				break;
+			}
+		}
+		//System.out.println("begin: " + beginningIdx);
+		//System.out.println("end: " + endingIdx);
+		return str.substring(beginningIdx, endingIdx + 1);
+	}
+	
+	/**
+	 * Finds the index of the last occurrence of a digit.
+	 * </br>
+	 * Example: str = "January 10, 2019" returns 16
+	 * @param str The string that will be searched.
+	 * @return Index of last digit. If there is no digit return -1.
+	 */
+	public static int getIndexOfLastDigit(String str)
+	{
+		for(int i = str.length() - 1; i >= 0; i--)
+		{
+			String character = str.substring(i, i + 1);
+			try
+			{
+				Integer.parseInt(character);
+				return i;
 			}
 			catch(NumberFormatException ex)
 			{
 				continue;
 			}
 		}
-		
-		//todo:finsh this function.
-		return "";
+		return -1;
 	}
+	
 	
 	/**
 	 * @return The expression of this class.

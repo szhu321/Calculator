@@ -1,5 +1,6 @@
 package main;
 
+import brain.Equation;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,6 +20,8 @@ public class Main extends Application
 	private TextField textField;
 	private TextArea textArea;
 	
+	private Equation equation;
+	
 	public static void main(String[] args)
 	{
 		launch(args);
@@ -29,6 +32,8 @@ public class Main extends Application
 		window = arg0;
 		window.setTitle("Calculator");
 		window.setResizable(false);
+		
+		equation = new Equation();
 		
 		VBox vbox = new VBox();
 		vbox.getStyleClass().add("container");
@@ -79,31 +84,51 @@ public class Main extends Application
 	{
 		Button btn = new Button(s);
 		gridPane.add(btn, xpos, ypos);
-		btn.setOnAction(event -> textField.setText(textField.getText() + s));
+		btn.setOnAction(event -> 
+		{
+			String ch = ((Button)event.getSource()).getText();
+			System.out.println(ch);
+			if(equation.addCharacter(ch))
+				display();
+			//textField.setText(textField.getText() + s));
+		});
+	}
+	
+	/**
+	 * Displays the equation on the textField.
+	 */
+	public void display()
+	{
+		textField.setText(equation.getExpression());
 	}
 	
 	public void opBtn(String s, int xpos, int ypos)
 	{
 		Button btn = new Button(s);
 		gridPane.add(btn, xpos, ypos);
-		btn.setOnAction(event -> {
-			String ch = textField.getText().substring(textField.getText().length() - 1);
-			try 
-			{
-				if(ch.equals("."))
-				{
-					//prevents multiple dots.
-					if(!s.equals("."))
-						textField.setText(textField.getText() + s);
-				}
-				else
-				{
-					Integer.parseInt(ch);
-					textField.setText(textField.getText() + s);
-				}
-			} catch(NumberFormatException e) {
-				textField.setText(textField.getText().substring(0, textField.getText().length() - 1) + s);
-			}
+		btn.setOnAction(event ->
+		{
+			String ch = ((Button)event.getSource()).getText();
+			System.out.println(ch);
+			if(equation.addCharacter(ch))
+				display();
+//			String ch = textField.getText().substring(textField.getText().length() - 1);
+//			try 
+//			{
+//				if(ch.equals("."))
+//				{
+//					//prevents multiple dots.
+//					if(!s.equals("."))
+//						textField.setText(textField.getText() + s);
+//				}
+//				else
+//				{
+//					Integer.parseInt(ch);
+//					textField.setText(textField.getText() + s);
+//				}
+//			} catch(NumberFormatException e) {
+//				textField.setText(textField.getText().substring(0, textField.getText().length() - 1) + s);
+//			}
 		});
 	}
 }
