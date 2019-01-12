@@ -50,6 +50,17 @@ public class Equation
 	}
 	
 	/**
+	 * Removes a character from the expression
+	 * @param Index The position of the character to be removed.
+	 * @return The character that was removed.
+	 */
+	public String removeCharacter(int idx)
+	{
+		//todo: complete this
+		return "BROKEN";
+	}
+	
+	/**
 	 * checks to see if the next character can be a dot.
 	 * @return True if dot is allowed.
 	 * </br>
