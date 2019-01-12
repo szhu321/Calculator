@@ -42,7 +42,7 @@ public class Main extends Application
 		root = new Group();
 		root.getChildren().add(vbox);
 		
-		scene = new Scene(root, 410, 640);
+		scene = new Scene(root, 410, 740);
 		
 		//adding CSS
 		scene.getStylesheets().add("file:stylesheets/calculator.css");
@@ -69,25 +69,38 @@ public class Main extends Application
 	
 	public void calcButtons()
 	{
-		numBtn("7", 0, 0); numBtn("8", 1, 0); numBtn("9", 2, 0);		// row1
-		numBtn("4", 0, 1); numBtn("5", 1, 1); numBtn("6", 2, 1);		// row2
-		numBtn("1", 0, 2); numBtn("2", 1, 2); numBtn("3", 2, 2);		// row3
-		numBtn("0", 0, 3); 												// row4
+		charBtn("7", 0, 0); charBtn("8", 1, 0); charBtn("9", 2, 0);		// row1
+		charBtn("4", 0, 1); charBtn("5", 1, 1); charBtn("6", 2, 1);		// row2
+		charBtn("1", 0, 2); charBtn("2", 1, 2); charBtn("3", 2, 2);		// row3
+		charBtn("0", 0, 3); 												// row4
 		
-		opBtn(".", 1, 3);
+		charBtn(".", 1, 3);
+		
+		charBtn("÷", 3, 0); charBtn("×", 3, 1); charBtn("-", 3, 2); charBtn("+", 3, 3); // operators
+		
+		//others
 		Button equ = new Button("="); gridPane.add(equ, 2, 3);
-		
-		opBtn("÷", 3, 0); opBtn("×", 3, 1); opBtn("-", 3, 2); opBtn("+", 3, 3); // operators
+		Button bak = new Button("BAK"); gridPane.add(bak, 0, 4);
+		bak.setOnAction(event ->
+		{
+			equation.removeCharacter(equation.getExpression().length() - 1);
+			display();
+		});
+		Button clr = new Button("CLR"); gridPane.add(clr, 1, 4);
+		clr.setOnAction(event -> 
+		{
+			equation.clear();
+			display();
+		});
 	}
 	
-	public void numBtn(String s, int xpos, int ypos)
+	public void charBtn(String s, int xpos, int ypos)
 	{
 		Button btn = new Button(s);
 		gridPane.add(btn, xpos, ypos);
 		btn.setOnAction(event -> 
 		{
 			String ch = ((Button)event.getSource()).getText();
-			System.out.println(ch);
 			if(equation.addCharacter(ch))
 				display();
 			//textField.setText(textField.getText() + s));
@@ -100,35 +113,5 @@ public class Main extends Application
 	public void display()
 	{
 		textField.setText(equation.getExpression());
-	}
-	
-	public void opBtn(String s, int xpos, int ypos)
-	{
-		Button btn = new Button(s);
-		gridPane.add(btn, xpos, ypos);
-		btn.setOnAction(event ->
-		{
-			String ch = ((Button)event.getSource()).getText();
-			System.out.println(ch);
-			if(equation.addCharacter(ch))
-				display();
-//			String ch = textField.getText().substring(textField.getText().length() - 1);
-//			try 
-//			{
-//				if(ch.equals("."))
-//				{
-//					//prevents multiple dots.
-//					if(!s.equals("."))
-//						textField.setText(textField.getText() + s);
-//				}
-//				else
-//				{
-//					Integer.parseInt(ch);
-//					textField.setText(textField.getText() + s);
-//				}
-//			} catch(NumberFormatException e) {
-//				textField.setText(textField.getText().substring(0, textField.getText().length() - 1) + s);
-//			}
-		});
 	}
 }

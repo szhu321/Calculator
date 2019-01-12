@@ -56,8 +56,20 @@ public class Equation
 	 */
 	public String removeCharacter(int idx)
 	{
-		//todo: complete this
-		return "BROKEN";
+		String result = expression.substring(idx, idx + 1);
+		if(idx == expression.length() - 1)
+			expression = expression.substring(0, idx);
+		else
+			expression = expression.substring(0, idx) + expression.substring(idx + 1);
+		return result;
+	}
+	
+	/**
+	 * Clears the expression
+	 */
+	public void clear()
+	{
+		expression = "";
 	}
 	
 	/**
