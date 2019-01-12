@@ -56,6 +56,8 @@ public class Equation
 	 */
 	public String removeCharacter(int idx)
 	{
+		if(expression.length() == 0)
+			return "";
 		String result = expression.substring(idx, idx + 1);
 		if(idx == expression.length() - 1)
 			expression = expression.substring(0, idx);
