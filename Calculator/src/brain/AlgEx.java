@@ -82,6 +82,7 @@ public class AlgEx {
 	}
 	
 	public void invert() {
+		if(eq.length() == 0) return;
 		if(Character.toString(lastNum().charAt(0)).matches("[0-9]|-")) {
 			Double invD = Double.parseDouble(lastNum()) * -1;
 			Integer invI = invD.intValue();
