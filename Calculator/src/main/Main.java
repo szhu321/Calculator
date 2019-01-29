@@ -149,7 +149,6 @@ public class Main extends Application
 		Button eql = new Button("=");
 		eql.setOnAction(event -> {
 			textField.setText(algex.parse());
-			algex.clear();
 		});
 		gridPane.add(eql, 2, 4);
 	}

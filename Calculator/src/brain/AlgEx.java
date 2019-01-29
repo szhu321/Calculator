@@ -39,8 +39,6 @@ public class AlgEx {
 		ArrayList<String> eq = 
 				new ArrayList<String>(Arrays.asList(equation.split(" ")));
 		
-		System.out.println(eq.toString());
-		
 		for(int i = 1; i < eq.size(); i++) {
 			if(eq.get(i).matches("\\W")) {
 				switch(eq.get(i)) {
@@ -75,18 +73,19 @@ public class AlgEx {
 			}
 		}
 		
-		System.out.println(eq.toString());
-		if(Double.parseDouble(eq.get(0)) % 1 == 0) 
-			return eq.get(0).substring(0, eq.get(0).indexOf('.'));
-		return eq.get(0);
+		this.eq = (Double.parseDouble(eq.get(0)) % 1 == 0) ? 
+				Integer.toString(((Double) Double.parseDouble(eq.get(0))).intValue()) :
+					Double.toString(Double.parseDouble(eq.get(0)));
+		return this.eq;
 	}
 	
 	public void invert() {
 		if(eq.length() == 0) return;
-		if(Character.toString(lastNum().charAt(0)).matches("[0-9]|-")) {
-			Double invD = Double.parseDouble(lastNum()) * -1;
-			Integer invI = invD.intValue();
-			String inverted = (invD == Math.floor(invD)) ? Integer.toString(invI) : Double.toString(invD);
+		else if(Character.toString(lastNum().trim().charAt(0)).matches("[0-9]|-")
+				&& lastChar().matches("[0-9]")) {
+			String inverted = (Double.parseDouble(lastNum()) % 1 == 0) ? 
+					Integer.toString(Integer.parseInt(lastNum()) * -1) :
+						Double.toString(Double.parseDouble(lastNum()) * -1);
 			eq = eq.substring(0, eq.length() - lastNum().length()) + inverted;
 		}
 	}
