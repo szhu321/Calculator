@@ -6,14 +6,14 @@
 
 .button
 {
-	-fx-font-size: 20pt;
+	-fx-font-size: 24pt;
 	-fx-pref-width: 100px;
 	-fx-pref-height: 100px;
 }
 
 .inputBox
 {
-	-fx-font-size: 18pt;
+	-fx-font-size: 28pt;
 }
 
 .displayBox
@@ -23,5 +23,5 @@
 
 .container
 {
-	-fx-padding: 10px;
+	-fx-padding: 32px;
 }

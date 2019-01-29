@@ -7,7 +7,7 @@ package brain;
  */
 public class Equation
 {
-	public static final String[] evalSymbol = {"+", "-", "÷", "×"};
+	public static final String[] evalSymbol = {"Ã—", "Ã·", "âˆ’", "+"};
 	
 	private String expression;
 	
@@ -116,7 +116,7 @@ public class Equation
 	/**
 	 * Checks to see if the character is a evaluation symbol.
 	 * </br>
-	 * Evaluation symbols: +, -, ÷, ×
+	 * Evaluation symbols: +, -, Ã·, Ã—
 	 * @param str
 	 * @return
 	 */
