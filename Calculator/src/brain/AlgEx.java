@@ -86,7 +86,7 @@ public class AlgEx {
 			Double invD = Double.parseDouble(lastNum()) * -1;
 			Integer invI = invD.intValue();
 			String inverted = (invD == Math.floor(invD)) ? Integer.toString(invI) : Double.toString(invD);
-			eq = eq.substring(0, eq.indexOf(lastNum())) + inverted;
+			eq = eq.substring(0, eq.length() - lastNum().length()) + inverted;
 		}
 	}
 	

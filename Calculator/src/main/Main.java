@@ -58,7 +58,6 @@ public class Main extends Application
 		textField = new TextField();
 		//adding a styleClass to the textField.
 		textField.getStyleClass().add("inputBox");
-		
 		textField.setEditable(false);
 		
 		textArea = new TextArea();
